@@ -1,0 +1,66 @@
+/* attach.css : attachments, tasks list, account filter */
+
+/* ---- upload control ---- */
+.attach .drop { display: flex; align-items: center; gap: 12px; padding: 14px 16px; border-radius: 14px; border: 1.5px dashed color-mix(in srgb, var(--muted) 60%, transparent); background: var(--chip); color: var(--soft); cursor: pointer; transition: 0.15s; }
+.attach .drop:hover, .attach .drop.over { border-color: var(--accent); background: var(--active); color: var(--accent); }
+.attach .drop.busy { opacity: 0.6; cursor: progress; }
+.attach .drop .icon { width: 20px; height: 20px; flex: 0 0 auto; }
+.attach .drop b { display: block; font-size: 13.5px; color: var(--text); }
+.attach .drop small { color: var(--muted); font-size: 12px; }
+.attach .alist:empty { display: none; }
+.attach .alist { margin-top: 10px; }
+.attach .set-msg:empty { display: none; }
+.attach .set-msg { margin: 8px 0 0; }
+
+/* ---- shown attachments ---- */
+.atts { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 10px; }
+.att-pic, .att-file { position: relative; }
+.att-img { display: block; padding: 0; border: 1px solid var(--border); border-radius: 12px; overflow: hidden; background: var(--chip); cursor: zoom-in; }
+.att-img img { display: block; width: 96px; height: 96px; object-fit: cover; }
+.att-file a { display: flex; align-items: center; gap: 10px; max-width: 240px; padding: 10px 14px 10px 12px; border-radius: 12px; border: 1px solid var(--border); background: var(--chip); color: var(--text); text-decoration: none; }
+.att-file a:hover { border-color: var(--accent); }
+.att-file .icon { width: 20px; height: 20px; color: var(--accent); flex: 0 0 auto; }
+.att-file span { min-width: 0; }
+.att-file b { display: block; font-size: 13px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.att-file small { color: var(--muted); font-size: 11.5px; }
+.att-x { position: absolute; top: -7px; right: -7px; width: 22px; height: 22px; border-radius: 50%; border: 0; background: #e5484d; color: #fff; font-size: 15px; line-height: 1; cursor: pointer; box-shadow: 0 2px 6px rgb(0 0 0 / 30%); }
+.att-h { margin: 22px 0 0; font-size: 13px; font-weight: 700; color: var(--soft); letter-spacing: 0.02em; }
+.att-h + .atts { margin-top: 8px; }
+
+dialog.lightbox { border: 0; padding: 0; background: transparent; max-width: 94vw; max-height: 94vh; overflow: visible; }
+dialog.lightbox::backdrop { background: rgb(10 8 30 / 78%); }
+dialog.lightbox img { display: block; max-width: 92vw; max-height: 88vh; border-radius: 14px; box-shadow: 0 20px 60px rgb(0 0 0 / 50%); }
+dialog.lightbox button { position: absolute; top: -14px; right: -14px; width: 34px; height: 34px; border-radius: 50%; border: 0; background: #fff; color: #1d2140; font-size: 22px; cursor: pointer; }
+
+/* ---- ticket card paperclip ---- */
+.tk .clip, .tk-row .clip { display: inline-flex; align-items: center; gap: 4px; color: var(--muted); font-size: 12px; }
+.clip .icon { width: 13px; height: 13px; }
+
+/* ---- tasks ---- */
+.tk-group { margin-top: 22px; }
+.tk-group:first-child { margin-top: 0; }
+.tk-ghead { display: flex; align-items: center; gap: 10px; margin: 0 0 4px; font-size: 14px; }
+.tk-ghead .av { width: 28px; height: 28px; font-size: 11px; }
+.tk-ghead span { color: var(--muted); font-size: 12px; font-weight: 500; }
+.tk-row { display: flex; align-items: flex-start; gap: 14px; padding: 14px 0; border-top: 1px solid var(--border); cursor: pointer; }
+.tk-row:first-child { border-top: 0; }
+.tk-row:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 10px; }
+.tk-row input { appearance: none; margin: 2px 0 0; width: 22px; height: 22px; border: 2px solid var(--muted); background: var(--chip); border-radius: 7px; display: grid; place-items: center; cursor: pointer; flex: 0 0 auto; transition: 0.2s; }
+.tk-row input:checked { background: var(--accent); border-color: var(--accent); }
+.tk-row input:checked::after { content: ""; width: 5px; height: 10px; border: solid #fff; border-width: 0 2px 2px 0; rotate: 45deg; translate: 0 -1px; }
+.tk-body { flex: 1; min-width: 0; }
+.tk-body > b { display: block; font-size: 14.5px; font-weight: 600; overflow-wrap: anywhere; }
+.tk-body > p { margin: 3px 0 0; color: var(--soft); font-size: 13px; line-height: 1.5; overflow-wrap: anywhere; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.tk-row.done .tk-body > b { text-decoration: line-through; color: var(--muted); }
+.tk-meta { display: flex; align-items: center; flex-wrap: wrap; gap: 8px 12px; margin-top: 8px; color: var(--muted); font-size: 12px; }
+.tk-meta .late { color: #e5484d; font-weight: 600; }
+.tk-meta .who { display: inline-flex; align-items: center; gap: 6px; }
+.tk-meta .who .av { width: 18px; height: 18px; font-size: 8px; }
+.tk-thumbs { display: flex; gap: 6px; margin-top: 8px; }
+.tk-thumbs img { width: 44px; height: 44px; object-fit: cover; border-radius: 8px; border: 1px solid var(--border); }
+.tk-thumbs span { display: grid; place-items: center; width: 44px; height: 44px; border-radius: 8px; background: var(--chip); color: var(--soft); font-size: 12px; font-weight: 700; }
+.acct-seg { display: flex; flex-wrap: wrap; height: auto; }
+.acct-seg button { height: 32px; }
+.acct-seg button small { margin-left: 6px; opacity: 0.65; font-weight: 500; }
+.mnote { margin: 0 0 4px; color: var(--muted); font-size: 13px; }
+.badge[hidden] { display: none; }

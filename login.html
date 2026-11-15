@@ -1,0 +1,199 @@
+<!-- login.html -->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Sign in · Workspace</title>
+    <link rel="stylesheet" href="login.css" />
+  </head>
+  <body>
+    <main class="login">
+      <!-- artwork (left on desktop, top on mobile) -->
+      <section class="art" aria-hidden="true">
+        <svg viewBox="0 0 900 1000" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0"    stop-color="#14104f" />
+              <stop offset="0.38" stop-color="#3a2a9c" />
+              <stop offset="0.62" stop-color="#8a45b8" />
+              <stop offset="0.80" stop-color="#e57fa6" />
+              <stop offset="1"    stop-color="#ffb08a" />
+            </linearGradient>
+            <radialGradient id="sun" cx="0.45" cy="0.4" r="0.7">
+              <stop offset="0"   stop-color="#ffd2a6" />
+              <stop offset="0.6" stop-color="#ff9fb0" />
+              <stop offset="1"   stop-color="#e86fae" />
+            </radialGradient>
+            <radialGradient id="glow" cx="0.5" cy="0.5" r="0.5">
+              <stop offset="0" stop-color="#ffb08a" stop-opacity="0.55" />
+              <stop offset="1" stop-color="#ffb08a" stop-opacity="0" />
+            </radialGradient>
+            <linearGradient id="far"  x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8c5fd0" /><stop offset="1" stop-color="#5b3fb4" /></linearGradient>
+            <linearGradient id="mid"  x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5a3fc0" /><stop offset="1" stop-color="#2c1f86" /></linearGradient>
+            <linearGradient id="near" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2b2090" /><stop offset="1" stop-color="#150f58" /></linearGradient>
+            <linearGradient id="lake" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0"   stop-color="#e8789f" />
+              <stop offset="0.35" stop-color="#8a4bb4" />
+              <stop offset="1"   stop-color="#1a1262" />
+            </linearGradient>
+            <filter id="blur"><feGaussianBlur stdDeviation="10" /></filter>
+          </defs>
+
+          <rect width="900" height="1000" fill="url(#sky)" />
+
+          <!-- stars -->
+          <g fill="#fff" opacity="0.7">
+            <circle cx="140" cy="130" r="1.6" /><circle cx="320" cy="80" r="1.2" /><circle cx="520" cy="150" r="1.4" />
+            <circle cx="700" cy="90" r="1.6" /><circle cx="80" cy="260" r="1.1" /><circle cx="610" cy="250" r="1.2" />
+          </g>
+          <path d="M470 200 L610 140" stroke="#fff" stroke-opacity="0.25" stroke-width="2" stroke-linecap="round" />
+
+          <!-- sun -->
+          <circle cx="500" cy="470" r="330" fill="url(#glow)" />
+          <circle cx="500" cy="470" r="200" fill="url(#sun)" />
+
+          <!-- mountains -->
+          <path fill="url(#far)"  d="M0 640 C90 560 160 520 250 540 C340 560 380 640 480 620 C580 600 660 640 740 650 C820 660 860 630 900 620 L900 790 L0 790Z" opacity="0.9" />
+          <path fill="url(#mid)"  d="M0 560 C90 510 190 400 290 430 C390 460 430 580 540 650 C620 700 720 690 800 720 L900 740 L900 800 L0 800Z" />
+          <path fill="url(#near)" d="M0 690 C120 650 230 690 350 730 C450 765 580 750 700 775 L900 800 L900 820 L0 820Z" />
+
+          <!-- lake -->
+          <rect y="760" width="900" height="240" fill="url(#lake)" />
+          <ellipse cx="500" cy="850" rx="130" ry="46" fill="#ffb08a" opacity="0.55" filter="url(#blur)" />
+          <g stroke="#ffd0b0" stroke-linecap="round" opacity="0.55">
+            <path d="M400 815 H600" stroke-width="3" />
+            <path d="M430 850 H570" stroke-width="3" />
+            <path d="M455 885 H545" stroke-width="2" />
+          </g>
+          <path d="M0 780 C200 770 400 790 900 775" stroke="#fff" stroke-opacity="0.15" stroke-width="2" fill="none" />
+        </svg>
+
+        <div class="brand">
+          <svg class="mark" viewBox="0 0 48 48" aria-hidden="true"><use href="#logo" /></svg>
+          <span>Workspace</span>
+        </div>
+        <div class="dots"><i class="on"></i><i></i><i></i></div>
+      </section>
+
+      <!-- form -->
+      <section class="panel">
+        <div class="card" id="card">
+          <svg class="mark big" viewBox="0 0 48 48" aria-hidden="true"><use href="#logo" /></svg>
+
+          <div class="tabs" role="tablist">
+            <i class="thumb" aria-hidden="true"></i>
+            <button type="button" role="tab" id="tab-in" aria-selected="true" aria-controls="form">Sign in</button>
+            <button type="button" role="tab" id="tab-up" aria-selected="false" aria-controls="form-up">Sign up</button>
+          </div>
+
+          <!-- sign in -->
+          <form id="form" class="pane" novalidate>
+            <h1>Welcome back</h1>
+            <p class="sub">Sign in to your workspace</p>
+
+            <label class="field">
+              <i class="ic" data-lucide="user"></i>
+              <input id="user" name="username" type="text" placeholder="Email or username" autocomplete="username" autofocus />
+            </label>
+
+            <label class="field">
+              <i class="ic" data-lucide="lock"></i>
+              <input id="pass" name="password" type="password" placeholder="Password" autocomplete="current-password" />
+              <button type="button" class="eye" data-eye="pass" aria-label="Show password">
+                <i class="ic eye-off" data-lucide="eye-off"></i>
+                <i class="ic eye-on"  data-lucide="eye"></i>
+              </button>
+            </label>
+
+            <p class="msg" id="msg" role="alert" aria-live="polite"></p>
+
+            <button class="submit" id="go" type="submit">
+              <span>Sign in</span>
+              <b><i class="ic" data-lucide="arrow-right"></i></b>
+            </button>
+
+            <p class="switch">New here? <a href="#signup" data-go="up">Create an account</a></p>
+          </form>
+
+          <!-- sign up -->
+          <form id="form-up" class="pane" novalidate hidden>
+            <h1>Create account</h1>
+            <p class="sub">Join the workspace in a few seconds</p>
+
+            <label class="field">
+              <i class="ic" data-lucide="id-card"></i>
+              <input id="su-name" type="text" placeholder="Full name" autocomplete="name" />
+            </label>
+
+            <label class="field">
+              <i class="ic" data-lucide="at-sign"></i>
+              <input id="su-user" type="text" placeholder="Username" autocomplete="username" />
+            </label>
+
+            <label class="field">
+              <i class="ic" data-lucide="mail"></i>
+              <input id="su-email" type="email" placeholder="Email" autocomplete="email" />
+            </label>
+
+            <label class="field">
+              <i class="ic" data-lucide="lock"></i>
+              <input id="su-pass" type="password" placeholder="Password" autocomplete="new-password" />
+              <button type="button" class="eye" data-eye="su-pass" aria-label="Show password">
+                <i class="ic eye-off" data-lucide="eye-off"></i>
+                <i class="ic eye-on"  data-lucide="eye"></i>
+              </button>
+            </label>
+
+            <div class="meter" id="meter" aria-hidden="true"><i></i><i></i><i></i><i></i><span id="meter-t">At least 8 characters, with a letter and a number</span></div>
+
+            <label class="field">
+              <i class="ic" data-lucide="shield-check"></i>
+              <input id="su-pass2" type="password" placeholder="Confirm password" autocomplete="new-password" />
+            </label>
+
+            <p class="msg" id="msg-up" role="alert" aria-live="polite"></p>
+
+            <button class="submit" id="go-up" type="submit">
+              <span>Create account</span>
+              <b><i class="ic" data-lucide="arrow-right"></i></b>
+            </button>
+
+            <p class="switch">Already have an account? <a href="#signin" data-go="in">Sign in</a></p>
+          </form>
+
+          <div class="or"><span>or continue with</span></div>
+
+          <div class="social">
+            <button type="button" data-provider="Google" aria-label="Continue with Google">
+              <svg viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+            </button>
+            <button type="button" data-provider="Apple" aria-label="Continue with Apple">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12.152 6.896c-.948 0-2.415-1.078-3.96-1.04-2.04.027-3.91 1.183-4.961 3.014-2.117 3.675-.546 9.103 1.519 12.09 1.013 1.454 2.208 3.09 3.792 3.039 1.52-.065 2.09-.987 3.935-.987 1.831 0 2.35.987 3.96.948 1.637-.026 2.676-1.48 3.676-2.948 1.156-1.688 1.636-3.325 1.662-3.415-.039-.013-3.182-1.221-3.22-4.857-.026-3.04 2.48-4.494 2.597-4.559-1.429-2.09-3.623-2.324-4.39-2.376-2-.156-3.675 1.09-4.61 1.09zM15.53 3.83c.843-1.012 1.4-2.427 1.245-3.83-1.207.052-2.662.805-3.532 1.818-.78.896-1.454 2.338-1.273 3.714 1.338.104 2.715-.688 3.559-1.701"/></svg>
+            </button>
+            <button type="button" data-provider="GitHub" aria-label="Continue with GitHub">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+            </button>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- shared logo symbol -->
+    <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+      <defs>
+        <linearGradient id="lg" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#a78bfa" /><stop offset="1" stop-color="#5b6cff" />
+        </linearGradient>
+        <symbol id="logo" viewBox="0 0 48 48">
+          <path d="M24 6 L42 40 H31 L24 26 L17 40 H6 Z" fill="url(#lg)" />
+          <path d="M24 26 L31 40 H17 Z" fill="#fff" opacity="0.28" />
+        </symbol>
+      </defs>
+    </svg>
+
+    <script src="lucide.min.js"></script>
+    <script src="auth.js"></script>
+    <script src="login.js"></script>
+  </body>
+</html>

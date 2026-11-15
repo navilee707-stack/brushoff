@@ -1,0 +1,437 @@
+/* styles.css */
+
+:root {
+  --text: #1d2140;
+  --soft: #4b5173;
+  --muted: #7d83a6;
+  --accent: #6d5dfc;
+  --accent-2: #3f8cff;
+  --active: rgb(109 93 252 / 16%);
+
+  /* glass */
+  --surface: rgb(255 255 255 / 40%);
+  --chip: rgb(255 255 255 / 34%);
+  --border: rgb(255 255 255 / 55%);
+  --edge: rgb(255 255 255 / 70%);
+  --blur: blur(26px) saturate(170%);
+  --shadow: 0 20px 50px rgb(70 55 160 / 18%);
+
+  /* backdrop the glass blurs */
+  --base: linear-gradient(155deg, #d9d4ff 0%, #ffd9ea 55%, #ffe6d2 100%);
+  --o1: #8b7bff; --o2: #ff8fb8; --o3: #6fd3ff; --o4: #ffb27a;
+}
+
+/* dark theme: same variables, new values */
+.theme-toggle:checked ~ .page {
+  --text: #eceeff;
+  --soft: #aab0d6;
+  --muted: #7b82ad;
+  --accent: #8b7bff;
+  --active: rgb(139 123 255 / 22%);
+
+  --surface: rgb(28 24 70 / 42%);
+  --chip: rgb(255 255 255 / 7%);
+  --border: rgb(255 255 255 / 10%);
+  --edge: rgb(255 255 255 / 18%);
+  --shadow: 0 24px 60px rgb(0 0 0 / 45%);
+
+  --base: linear-gradient(155deg, #0d0a2b 0%, #1a1046 55%, #2a0f3c 100%);
+  --o1: #4b3bd6; --o2: #b0358f; --o3: #1c6fd1; --o4: #6a2fb8;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: "Manrope", "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  color: var(--text);
+}
+
+.page {
+  position: relative;
+  isolation: isolate;
+  min-height: 100vh;
+  color: var(--text);
+}
+/* fixed colourful orbs: this is what the glass panels blur */
+.page::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background:
+    radial-gradient(520px 520px at 12% 12%, var(--o1), transparent 70%),
+    radial-gradient(560px 560px at 88% 18%, var(--o2), transparent 70%),
+    radial-gradient(620px 620px at 78% 92%, var(--o3), transparent 70%),
+    radial-gradient(480px 480px at 18% 88%, var(--o4), transparent 70%),
+    var(--base);
+}
+
+.theme-toggle { display: none; }
+
+.icon {
+  flex: 0 0 auto;
+  display: block;
+  width: 22px;
+  height: 22px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.75;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.sidebar {
+  position: fixed;
+  z-index: 100;
+  top: 24px;
+  left: 24px;
+  bottom: 32px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 84px;
+  padding: 20px;
+  border-radius: 28px;
+  background:
+    linear-gradient(160deg, rgb(255 255 255 / 22%), transparent 55%),
+    var(--surface);
+  border: 1px solid var(--edge);
+  -webkit-backdrop-filter: var(--blur);
+          backdrop-filter: var(--blur);
+  box-shadow: var(--shadow), inset 0 1px 0 var(--edge);
+  white-space: nowrap;
+  transition:
+    width 0.35s ease,
+    background-color 0.3s ease;
+}
+
+.sidebar:hover { width: 264px; }
+
+/* profile */
+.profile {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  height: 44px;
+}
+
+.avatar {
+  flex: 0 0 44px;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.details { flex: 1; opacity: 0; transition: opacity 0.15s; }
+.name { margin: 0; font-size: 14px; font-weight: 700; color: var(--text); }
+.role { margin: 2px 0 0; font-size: 12px; color: var(--muted); }
+
+.chevron {
+  width: 20px;
+  height: 20px;
+  color: var(--muted);
+  opacity: 0;
+  transition: opacity 0.15s;
+}
+
+.sidebar:hover :is(.details, .chevron) {
+  opacity: 1;
+  transition: opacity 0.25s 0.1s;
+}
+
+/* search */
+.search {
+  position: relative;
+  display: flex;
+  align-items: center;
+  flex: 0 0 44px;
+  width: 44px;
+  height: 44px;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: var(--chip);
+  transition: width 0.35s ease;
+}
+
+.sidebar:hover .search { width: 100%; }
+
+.search input {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  border-radius: inherit;
+  background: transparent;
+  color: var(--text);
+  font: inherit;
+  font-size: 14px;
+  padding: 0 44px 0 14px;
+  opacity: 0;
+  transition: opacity 0.15s;
+}
+
+.sidebar:hover .search input {
+  opacity: 1;
+  transition: opacity 0.25s 0.1s;
+}
+
+.search input::placeholder { color: var(--muted); }
+.search input:focus { outline: 0; }
+
+.search > .icon {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  translate: 0 -50%;
+  color: var(--muted);
+  pointer-events: none;
+}
+
+/* nav */
+nav { display: flex; flex-direction: column; }
+
+.item {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  height: 56px;
+  color: var(--soft);
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.item > .icon,
+.item p { position: relative; }
+
+.nav-radio { display: none; }
+
+.nav-radio:checked + .item { color: var(--accent); }
+
+.nav-radio:checked + .item::before { background: var(--active); box-shadow: inset 0 0 0 1px var(--edge), 0 6px 16px rgb(109 93 252 / 20%); }
+
+hr {
+  height: 1px;
+  margin: 12px 0;
+  border: 0;
+  background: var(--border);
+}
+
+.item > .icon { margin: 0 11px; }
+
+.item::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  translate: 0 -50%;
+  width: 44px;
+  height: 44px;
+  border-radius: 14px;
+  transition:
+    width 0.35s ease,
+    height 0.35s ease,
+    background-color 0.2s,
+    box-shadow 0.2s;
+}
+
+.sidebar:hover .item::before {
+  width: 100%;
+  height: 56px;
+}
+
+.item p {
+  margin: 0;
+  font-size: 15px;
+  opacity: 0;
+  transition: opacity 0.15s;
+}
+
+.sidebar:hover .item p {
+  opacity: 1;
+  transition: opacity 0.25s 0.1s;
+}
+
+.item:hover { color: var(--accent); }
+
+.badge {
+  position: absolute;
+  top: 8px;
+  right: -12px;
+  translate: 0 0;
+  display: grid;
+  place-items: center;
+  min-width: 22px;
+  height: 22px;
+  padding: 0 6px;
+  border-radius: 11px;
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: 700;
+  transition:
+    top 0.35s ease,
+    right 0.35s ease,
+    translate 0.35s ease;
+}
+
+.sidebar:hover .badge {
+  top: 50%;
+  right: 8px;
+  translate: 0 -50%;
+}
+
+/* actions: a vertical stack when collapsed, a row when expanded */
+.actions {
+  position: relative;
+  flex-shrink: 0;
+  height: 200px;
+  margin-top: auto;
+  transition: height 0.35s ease;
+}
+
+.sidebar:hover .actions { height: 44px; }
+
+.action {
+  position: absolute;
+  left: 0;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 0;
+  border-radius: 14px;
+  background: var(--chip);
+  box-shadow: inset 0 0 0 1px var(--border);
+  color: var(--soft);
+  cursor: pointer;
+  transition:
+    top 0.35s ease,
+    left 0.35s ease,
+    background-color 0.2s,
+    color 0.2s;
+}
+
+.action:hover { background: linear-gradient(135deg, var(--accent), var(--accent-2)); color: #fff; }
+
+/* collapsed: stacked, theme button at the bottom */
+.action:nth-child(1) { top: 156px; }
+.action:nth-child(2) { top: 104px; }
+.action:nth-child(3) { top: 52px; }
+.action:nth-child(4) { top: 0; }
+
+/* expanded: one row */
+.sidebar:hover .action { top: 0; }
+.sidebar:hover .action:nth-child(1) { left: 0; }
+.sidebar:hover .action:nth-child(2) { left: 60px; }
+.sidebar:hover .action:nth-child(3) { left: 120px; }
+.sidebar:hover .action:nth-child(4) { left: 180px; }
+
+.action .icon {
+  width: 20px;
+  height: 20px;
+}
+
+.action .sun,
+.theme-toggle:checked ~ .page .action .moon {
+  display: none;
+}
+
+.theme-toggle:checked ~ .page .action .sun {
+  display: block;
+}
+
+
+/* ===================  ACCOUNT MENU  =================== */
+:root {
+  --menu: rgb(255 255 255 / 94%);
+}
+.theme-toggle:checked ~ .page {
+  --menu: rgb(32 27 80 / 96%);
+}
+
+.profile { cursor: pointer; }
+
+.chevron-btn {
+  display: grid;
+  place-items: center;
+  flex: 0 0 auto;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  border: 0;
+  border-radius: 9px;
+  background: transparent;
+  color: var(--muted);
+  cursor: pointer;
+}
+.chevron-btn:hover { background: var(--chip); color: var(--text); }
+.chevron-btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.sidebar:not(:hover) .chevron-btn { pointer-events: none; }
+
+/* keep the fade-in AND add a smooth flip of the arrow */
+.sidebar:hover .chevron { transition: opacity 0.25s 0.1s, rotate 0.25s ease; }
+.sidebar.menu-open .chevron { rotate: 180deg; color: var(--accent); }
+
+.acct-menu {
+  position: absolute;
+  z-index: 5;
+  top: 74px;
+  left: 20px;
+  right: 20px;
+  padding: 8px;
+  border-radius: 18px;
+  border: 1px solid var(--edge);
+  background: var(--menu);
+  -webkit-backdrop-filter: var(--blur);
+          backdrop-filter: var(--blur);
+  box-shadow: var(--shadow);
+  opacity: 0;
+  visibility: hidden;
+  translate: 0 -6px;
+  transition: opacity 0.18s, translate 0.18s, visibility 0.18s;
+}
+.sidebar.menu-open .acct-menu { opacity: 1; visibility: visible; translate: 0 0; }
+.sidebar:not(:hover) .acct-menu { display: none; }
+
+.acct-head { padding: 8px 10px 10px; }
+.acct-head b { display: block; font-size: 14px; color: var(--text); overflow: hidden; text-overflow: ellipsis; }
+.acct-head span { display: block; margin-top: 2px; font-size: 12px; color: var(--muted); overflow: hidden; text-overflow: ellipsis; }
+.acct-sep { height: 1px; margin: 6px 4px; background: var(--border); }
+
+.acct-menu button {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  height: 42px;
+  padding: 0 10px;
+  border: 0;
+  border-radius: 12px;
+  background: transparent;
+  color: var(--soft);
+  font: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  text-align: left;
+  cursor: pointer;
+}
+.acct-menu button .icon { width: 18px; height: 18px; }
+.acct-menu button:hover,
+.acct-menu button:focus-visible { background: var(--active); color: var(--accent); outline: 0; }
+.acct-menu button.danger:hover,
+.acct-menu button.danger:focus-visible { background: rgb(229 72 77 / 14%); color: #e5484d; }
+
+/* settings button shows as "on" while the Settings page is open */
+.page:has(#nav-9:checked) #open-settings {
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  color: #fff;
+}
+
+/* native pickers (date, select) follow the theme */
+.theme-toggle:checked ~ .page { color-scheme: dark; }

@@ -1,0 +1,49 @@
+/* ticket.css : the single-ticket page */
+.tpage { max-width: 860px; margin: 0 auto; padding: 28px 20px 56px; display: grid; gap: 20px; }
+.tbar { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+.tbar a.btn { text-decoration: none; }
+.who-chip { display: flex; align-items: center; gap: 10px; }
+.who-chip b { display: block; font-size: 13px; }
+.who-chip span { color: var(--muted); font-size: 12px; }
+
+.tcard { padding: 26px; }
+.thead { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; flex-wrap: wrap; }
+.tid { margin-right: 4px; font-size: 13px; font-weight: 700; letter-spacing: 0.04em; color: var(--muted); }
+.tcard h1 { margin: 0 0 14px; font-size: 26px; letter-spacing: -0.02em; overflow-wrap: anywhere; }
+.tmeta { display: flex; align-items: center; gap: 10px; color: var(--soft); font-size: 14px; }
+.tmeta .av { width: 30px; height: 30px; font-size: 11px; }
+.tmeta b { color: var(--text); }
+
+/* status steps */
+.steps { list-style: none; display: flex; margin: 24px 0; padding: 0; }
+.steps li { position: relative; flex: 1; display: flex; flex-direction: column; align-items: center; gap: 8px; font-size: 12px; font-weight: 600; color: var(--muted); }
+.steps li::before { content: ""; position: absolute; top: 7px; left: -50%; width: 100%; height: 2px; background: var(--border); }
+.steps li:first-child::before { display: none; }
+.steps li i { position: relative; z-index: 1; width: 16px; height: 16px; border-radius: 50%; background: var(--chip); border: 2px solid var(--muted); }
+.steps li.done::before, .steps li.now::before { background: var(--accent); }
+.steps li.done i { background: var(--accent); border-color: var(--accent); }
+.steps li.now i { background: var(--surface); border-color: var(--accent); box-shadow: 0 0 0 4px var(--active); }
+.steps li.done, .steps li.now { color: var(--text); }
+
+.tdesc { margin: 0; font-size: 15px; line-height: 1.65; white-space: pre-wrap; overflow-wrap: anywhere; }
+.tnote { display: flex; align-items: center; gap: 8px; margin: 18px 0 0; padding: 12px 14px; border-radius: 14px; background: var(--chip); border: 1px solid var(--border); color: var(--soft); font-size: 13px; }
+.tnote .icon { width: 16px; height: 16px; color: var(--accent); }
+.tcard .mfoot { margin-top: 22px; }
+
+/* discussion */
+.cmt { display: flex; gap: 12px; padding: 16px 0; border-top: 1px solid var(--border); }
+.cmt:first-child { border-top: 0; padding-top: 4px; }
+.cbody { flex: 1; min-width: 0; }
+.chead { display: flex; align-items: center; gap: 8px; font-size: 14px; }
+.chead time, .evt time { margin-left: auto; color: var(--muted); font-size: 12px; white-space: nowrap; }
+.cbody p { margin: 6px 0 0; font-size: 14.5px; line-height: 1.6; white-space: pre-wrap; overflow-wrap: anywhere; }
+.evt { display: flex; align-items: center; gap: 10px; padding: 10px 0; border-top: 1px solid var(--border); color: var(--muted); font-size: 13px; }
+.evt:first-child { border-top: 0; }
+.evt .icon { width: 15px; height: 15px; }
+.evt b { color: var(--soft); }
+.cform { display: flex; gap: 12px; margin-top: 18px; padding-top: 18px; border-top: 1px solid var(--border); }
+.cbox { flex: 1; min-width: 0; }
+.cbox .field { width: 100%; min-width: 0; }
+.cfoot { display: flex; justify-content: flex-end; align-items: center; gap: 12px; margin-top: 10px; }
+.cfoot .set-msg { margin-right: auto; }
+@media (max-width: 560px) { .tcard { padding: 20px; } .tcard h1 { font-size: 22px; } }

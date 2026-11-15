@@ -1,0 +1,127 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>BRUSHOFF</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="dashboard.css" />
+    <link rel="stylesheet" href="attach.css" />
+    <script src="auth.js"></script>
+    <script>Auth.require(); /* not signed in -> login.html */</script>
+  </head>
+  <body>
+    <input type="checkbox" id="theme" class="theme-toggle" />
+    <script>try { if (localStorage.getItem('sidebar.theme') === 'dark') document.getElementById('theme').checked = true; } catch (e) {}</script>
+    <div class="page">
+      <aside class="sidebar">
+        <div class="profile">
+          <img class="avatar" src="avatar.svg" alt="" />
+          <div class="details">
+            <p class="name" id="who">Ivan Kenemen</p>
+            <p class="role" id="role">Admin</p>
+          </div>
+          <button class="chevron-btn" type="button" id="acct-btn" aria-label="Account menu" aria-haspopup="menu" aria-expanded="false" aria-controls="acct-menu">
+            <i class="icon chevron" data-lucide="chevron-down"></i>
+          </button>
+        </div>
+
+        <div class="acct-menu" id="acct-menu" role="menu" aria-label="Account">
+          <div class="acct-head"><b id="m-name"></b><span id="m-email"></span></div>
+          <button type="button" role="menuitem" data-go="profile"><i class="icon" data-lucide="user"></i>My profile</button>
+          <button type="button" role="menuitem" data-go="settings"><i class="icon" data-lucide="settings"></i>Settings</button>
+          <button type="button" role="menuitem" data-go="theme"><i class="icon" data-lucide="palette"></i><span id="m-theme">Dark mode</span></button>
+          <div class="acct-sep"></div>
+          <button type="button" role="menuitem" data-go="logout" class="danger"><i class="icon" data-lucide="log-out"></i>Log out</button>
+        </div>
+
+        <div class="search">
+          <input type="text" placeholder="Search dashboard" />
+          <i class="icon" data-lucide="search"></i>
+        </div>
+
+        <nav>
+          <input type="radio" name="nav" id="nav-1" class="nav-radio" checked />
+          <label class="item" for="nav-1">
+            <i class="icon" data-lucide="layout-dashboard"></i>
+            <p>Dashboard</p>
+          </label>
+
+          <input type="radio" name="nav" id="nav-2" class="nav-radio" />
+          <label class="item" for="nav-2">
+            <i class="icon" data-lucide="upload"></i>
+            <p>Reports</p>
+          </label>
+
+          <input type="radio" name="nav" id="nav-3" class="nav-radio" />
+          <label class="item" for="nav-3">
+            <i class="icon" data-lucide="compass"></i>
+            <p>Discover</p>
+          </label>
+
+          <input type="radio" name="nav" id="nav-4" class="nav-radio" />
+          <label class="item" for="nav-4">
+            <i class="icon" data-lucide="ticket"></i>
+            <p>Tickets</p>
+          </label>
+
+          <hr />
+
+          <input type="radio" name="nav" id="nav-5" class="nav-radio" />
+          <label class="item" for="nav-5">
+            <i class="icon" data-lucide="pin"></i>
+            <p>Tasks</p>
+            <span class="badge" id="task-badge" hidden>0</span>
+          </label>
+
+          <input type="radio" name="nav" id="nav-6" class="nav-radio" />
+          <label class="item" for="nav-6">
+            <i class="icon" data-lucide="network"></i>
+            <p>Projects</p>
+          </label>
+
+          <input type="radio" name="nav" id="nav-7" class="nav-radio" />
+          <label class="item" for="nav-7">
+            <i class="icon" data-lucide="mail"></i>
+            <p>Application</p>
+          </label>
+
+          <input type="radio" name="nav" id="nav-8" class="nav-radio" />
+          <label class="item" for="nav-8">
+            <i class="icon" data-lucide="user-pen"></i>
+            <p>User Management</p>
+          </label>
+
+          <input type="radio" name="nav" id="nav-9" class="nav-radio" />
+        </nav>
+
+        <div class="actions">
+          <label class="action" for="theme" title="Toggle theme">
+            <i class="icon moon" data-lucide="moon"></i>
+            <i class="icon sun" data-lucide="sun"></i>
+          </label>
+          <button class="action" id="open-settings" type="button" title="Settings" aria-label="Settings"><i class="icon" data-lucide="settings"></i></button>
+          <button class="action" title="Add"><i class="icon" data-lucide="plus"></i></button>
+          <button class="action" id="logout" title="Log out"><i class="icon" data-lucide="log-out"></i></button>
+        </div>
+      </aside>
+
+      <main class="content">
+        <section class="view" id="v1"></section>
+        <section class="view" id="v2"></section>
+        <section class="view" id="v3"></section>
+        <section class="view" id="v4"></section>
+        <section class="view" id="v5"></section>
+        <section class="view" id="v6"></section>
+        <section class="view" id="v7"></section>
+        <section class="view" id="v8"></section>
+        <section class="view" id="v9"></section>
+      </main>
+    </div>
+
+    <script src="lucide.min.js"></script>
+    <script src="attach.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>
