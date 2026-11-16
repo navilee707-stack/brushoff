@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="styles.css" />
     <link rel="stylesheet" href="dashboard.css" />
     <link rel="stylesheet" href="attach.css" />
+    <link rel="stylesheet" href="mobile.css" />
     <script src="auth.js"></script>
     <script>Auth.require(); /* not signed in -> login.html */</script>
   </head>
@@ -15,6 +16,13 @@
     <input type="checkbox" id="theme" class="theme-toggle" />
     <script>try { if (localStorage.getItem('sidebar.theme') === 'dark') document.getElementById('theme').checked = true; } catch (e) {}</script>
     <div class="page">
+      <header class="topbar">
+        <button class="menu-btn" id="menu-btn" type="button" aria-label="Open menu" aria-expanded="false"><i class="icon" data-lucide="menu"></i></button>
+        <b id="topbar-title">Dashboard</b>
+        <span class="grow"></span>
+        <img class="avatar" src="avatar.svg" alt="" />
+      </header>
+      <div class="scrim" id="scrim"></div>
       <aside class="sidebar">
         <div class="profile">
           <img class="avatar" src="avatar.svg" alt="" />
@@ -123,5 +131,6 @@
     <script src="lucide.min.js"></script>
     <script src="attach.js"></script>
     <script src="app.js"></script>
+    <script src="mobile.js"></script>
   </body>
 </html>
