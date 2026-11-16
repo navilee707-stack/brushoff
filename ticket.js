@@ -121,6 +121,7 @@ if (!current()) {
 
   $('#cform').addEventListener('submit', e => {
     e.preventDefault();
+    if (Auth.gate('comment on a ticket')) return;
     const text = $('#ctext').value.trim(), attachments = files.get();
     if (files.busy()) return flash($('#cmsg'), 'Still reading your files… one moment.', false);
     if (!text && !attachments.length) return flash($('#cmsg'), 'Write something or attach a file first.', false);

@@ -386,3 +386,14 @@ a.src { color: var(--accent); font-weight: 600; font-size: 13px; text-decoration
 .mini-stats div { background: var(--chip); border-radius: 12px; padding: 10px 6px; text-align: center; font-size: 11px; color: var(--muted); }
 .mini-stats b { display: block; font-size: 18px; color: var(--text); }
 @media (max-width: 900px) { .hero { grid-template-columns: 1fr; } .hero-art { display: none; } .facts { grid-template-columns: 1fr 1fr; } .rp-two { grid-template-columns: 1fr; } }
+
+/* anonymous visitors: "Sign in required" dialog */
+dialog.gate { width: min(400px, calc(100vw - 32px)); text-align: center; }
+.gate .mform { display: grid; justify-items: center; gap: 4px; }
+.gate-ic { width: 52px; height: 52px; display: grid; place-items: center; border-radius: 16px; background: var(--active); color: var(--accent); margin-bottom: 8px; }
+.gate-ic .icon { width: 24px; height: 24px; }
+.gate .mnote { margin: 0 0 8px; line-height: 1.5; color: var(--soft); }
+.gate-btns { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; width: 100%; margin-top: 10px; }
+.gate-btns .btn { justify-content: center; }
+.gate-x { grid-column: 1 / -1; background: none; border: 0; color: var(--soft); font: inherit; font-size: 13px; font-weight: 600; padding: 8px; cursor: pointer; }
+.gate-x:hover { color: var(--text); }

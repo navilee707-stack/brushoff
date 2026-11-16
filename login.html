@@ -152,6 +152,55 @@
               <input id="su-pass2" type="password" placeholder="Confirm password" autocomplete="new-password" />
             </label>
 
+
+            <fieldset class="demo">
+              <legend>Demographic profile <em>(optional)</em></legend>
+              <p class="hint">Helps us understand who uses the workspace. You can skip any of these.</p>
+              <div class="row2">
+                <label class="field sel">
+                  <i class="ic" data-lucide="cake"></i>
+                  <select id="su-age" aria-label="Age group">
+                    <option value="">Age group</option>
+                    <option>Under 18</option><option>18–24</option><option>25–34</option>
+                    <option>35–44</option><option>45–54</option><option>55–64</option><option>65+</option>
+                    <option>Prefer not to say</option>
+                  </select>
+                </label>
+                <label class="field sel">
+                  <i class="ic" data-lucide="users"></i>
+                  <select id="su-gender" aria-label="Gender">
+                    <option value="">Gender</option>
+                    <option>Female</option><option>Male</option><option>Non-binary</option>
+                    <option>Prefer to self-describe</option><option>Prefer not to say</option>
+                  </select>
+                </label>
+              </div>
+              <label class="field">
+                <i class="ic" data-lucide="map-pin"></i>
+                <input id="su-country" type="text" placeholder="Country / region" autocomplete="country-name" />
+              </label>
+              <div class="row2">
+                <label class="field sel">
+                  <i class="ic" data-lucide="briefcase"></i>
+                  <select id="su-occ" aria-label="Occupation">
+                    <option value="">Occupation</option>
+                    <option>Student</option><option>Employed</option><option>Self-employed</option>
+                    <option>Unemployed</option><option>Retired</option><option>Other</option>
+                    <option>Prefer not to say</option>
+                  </select>
+                </label>
+                <label class="field sel">
+                  <i class="ic" data-lucide="graduation-cap"></i>
+                  <select id="su-edu" aria-label="Education">
+                    <option value="">Education</option>
+                    <option>High school</option><option>Some college</option><option>Bachelor’s</option>
+                    <option>Master’s</option><option>Doctorate</option><option>Other</option>
+                    <option>Prefer not to say</option>
+                  </select>
+                </label>
+              </div>
+            </fieldset>
+
             <p class="msg" id="msg-up" role="alert" aria-live="polite"></p>
 
             <button class="submit" id="go-up" type="submit">
@@ -162,7 +211,13 @@
             <p class="switch">Already have an account? <a href="#signin" data-go="in">Sign in</a></p>
           </form>
 
-          <div class="or"><span>or continue with</span></div>
+          <div class="or"><span>or</span></div>
+
+          <button type="button" class="anon" id="anon">
+            <i class="ic" data-lucide="venetian-mask"></i>
+            <span>Continue anonymously</span>
+          </button>
+          <p class="anon-note">You can browse without an account. Signing in is required to send reports, create tickets and post comments.</p>
 
           <div class="social">
             <button type="button" data-provider="Google" aria-label="Continue with Google">

@@ -398,6 +398,30 @@ function v9() {
   </div>`;
 }
 
+/* ---------- anonymous visitors: browse only ----------
+   Capture-phase guards run before every other handler, so a guest can never create or post anything.
+   They get a "Sign in required" dialog with Sign in / Sign up buttons instead. */
+(() => {
+  const BLOCK = [
+    ['.js-new-ticket', 'create a ticket'], ['.js-new-task', 'create a task'], ['.js-new-project', 'create a project'],
+    ['[data-vote]', 'vote on a report'], ['[data-save]', 'save a report'], ['[data-csend]', 'comment on a report'],
+  ];
+  const stop = (e, what) => { e.preventDefault(); e.stopImmediatePropagation(); Auth.gate(what); };
+  document.addEventListener('click', e => {
+    if (!Auth.isGuest()) return;
+    for (const [sel, what] of BLOCK) if (e.target.closest(sel)) return stop(e, what);
+  }, true);
+  document.addEventListener('keydown', e => {                          // Enter inside a comment box
+    if (Auth.isGuest() && e.key === 'Enter' && e.target.dataset?.cin) stop(e, 'comment on a report');
+  }, true);
+  document.addEventListener('submit', e => {
+    if (Auth.isGuest() && e.target.id === 'rf') stop(e, 'send a report');
+  }, true);
+  document.addEventListener('change', e => {                           // tick a task
+    if (Auth.isGuest() && e.target.dataset?.tick) { e.target.checked = !e.target.checked; stop(e, 'update tasks'); }
+  }, true);
+})();
+
 /* ---------- boot ---------- */
 [v1, v2, v3, v4, v5, v6, v7, v8, v9].forEach((f, i) => $('#v' + (i + 1)).innerHTML = f());
 fillReports(); fillDiscover(); fillTasks(); showMail(0); fillBoard(); fillProjects();
@@ -409,6 +433,7 @@ $('#dq').addEventListener('input', fillDiscover);
 $('#df').addEventListener('click', e => { const b = e.target.closest('button'); if (!b) return; dSort = b.textContent; document.querySelectorAll('#df button').forEach(x => x.classList.toggle('on', x === b)); fillDiscover(); });
 $('#rf').addEventListener('submit', e => {
   e.preventDefault();
+  if (Auth.gate('send a report')) return;
   const msg = $('#rf-msg'), title = $('#r-title').value.trim(), summary = $('#r-sum').value.trim(), link = $('#r-link').value.trim(), u = Auth.session();
   if (!title || !summary) return flash(msg, 'Please add a title and a short summary.', false);
   if (link && !/^https?:\/\/\S+$/i.test(link)) return flash(msg, 'The link must start with http:// or https://', false);
@@ -435,6 +460,7 @@ document.addEventListener('click', e => {
 document.addEventListener('keydown', e => { if (e.key === 'Enter' && e.target.dataset?.cin) { e.preventDefault(); sendComment(e.target.dataset.cin); } });
 function sendComment(id) {
   const inp = document.querySelector(`[data-cin="${CSS.escape(id)}"]`), text = inp?.value.trim(), r = reports.find(x => x.id === id), u = Auth.session();
+  if (Auth.gate('comment on a report')) return;
   if (!text || !r) return;
   r.comments.push({ by: u.name, text, at: Date.now() }); openThreads.add(id); brushSave();
   document.querySelector(`[data-cin="${CSS.escape(id)}"]`)?.focus();
@@ -620,6 +646,7 @@ const commit = () => { const ok = persist(); repaint(); return ok; };
 
 /* ----- tickets: the form only CREATES a ticket. Editing happens on ticket.html (Staff / Admin only) ----- */
 function openNewTicket() {
+  if (Auth.gate('create a ticket')) return;
   const staff = canEdit(), me = Auth.session();
   openModal({
     title: 'New ticket',
@@ -644,6 +671,7 @@ function openNewTicket() {
 
 /* ----- tasks ----- */
 function openTask(id) {
+  if (Auth.gate(id ? 'open tasks' : 'create a task')) return;
   const t = id && tasks.find(x => x.id === id && Auth.canSeeTask(x)), me = Auth.session();
   if (id && !t) return;
   openModal({
@@ -676,6 +704,7 @@ function openTask(id) {
 
 /* ----- projects ----- */
 function openProject(id) {
+  if (Auth.gate(id ? 'edit projects' : 'create a project')) return;
   const p = id && projects.find(x => x.id === id);
   const people = [...new Set([Auth.session().name, ...users.map(u => u[0]), ...projects.flatMap(x => x.team)])];
   openModal({

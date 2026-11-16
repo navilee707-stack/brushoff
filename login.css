@@ -176,3 +176,29 @@ h1 { margin: 0; text-align: center; font-size: 26px; letter-spacing: -0.02em; te
 }
 
 @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
+
+
+/* ---------- demographic profile + anonymous ---------- */
+.demo { margin: 4px 0 6px; padding: 0; border: 0; min-width: 0; }
+.demo legend { padding: 0; margin-bottom: 4px; font-size: 13px; font-weight: 700; color: #fff; }
+.demo legend em { font-style: normal; font-weight: 500; color: var(--muted); }
+.demo .hint { margin: 0 2px 10px; font-size: 12px; color: var(--muted); }
+.demo .row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.demo .field { height: 48px; margin-bottom: 10px; padding: 0 12px; gap: 8px; }
+.demo .field .ic { width: 18px; height: 18px; flex: none; }
+.field select {
+  flex: 1; min-width: 0; height: 100%; border: 0; outline: 0; background: transparent;
+  color: #fff; font: inherit; font-size: 14px; cursor: pointer; text-overflow: ellipsis;
+}
+.field select option { color: #1c1740; background: #fff; }
+@media (max-width: 520px) { .demo .row2 { grid-template-columns: 1fr; } }
+
+.anon {
+  display: flex; align-items: center; justify-content: center; gap: 10px; width: 100%;
+  height: 50px; border-radius: 99px; cursor: pointer; font: inherit; font-size: 15px; font-weight: 700; color: #fff;
+  border: 1px solid rgb(255 255 255 / 40%); background: rgb(255 255 255 / 14%);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 30%);
+  transition: transform 0.15s, background 0.2s;
+}
+.anon:hover { transform: translateY(-1px); background: rgb(255 255 255 / 24%); }
+.anon-note { margin: 10px 0 18px; text-align: center; font-size: 12px; color: var(--muted); }

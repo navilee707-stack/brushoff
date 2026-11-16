@@ -1,8 +1,8 @@
 /* login.js — sign in + sign up */
 const $ = s => document.querySelector(s);
 
-// already signed in? go straight to the dashboard
-if (Auth.session()) location.replace('index.html');
+// already signed in? go straight to the dashboard (anonymous visitors stay so they can sign in or sign up)
+if (Auth.session() && !Auth.session().guest) location.replace('index.html');
 
 lucide.createIcons();
 
@@ -91,15 +91,28 @@ panes.up.addEventListener('submit', e => {
   if (p.length < 8 || !/[A-Za-z]/.test(p) || !/\d/.test(p)) return say(msgUp, 'Password needs 8+ characters with a letter and a number.');
   if (p !== f.pass2.value) { f.pass2.value = ''; f.pass2.focus(); return say(msgUp, 'Passwords don’t match.'); }
 
+  const profile = {
+    age: $('#su-age').value, gender: $('#su-gender').value, country: $('#su-country').value.trim(),
+    occupation: $('#su-occ').value, education: $('#su-edu').value,
+  };
+  const hasProfile = Object.values(profile).some(Boolean);
+
   goUp.disabled = true; goUp.classList.add('busy');
   setTimeout(() => {
-    const r = Auth.register({ name, username: un, email, password: p });
+    const r = Auth.register({ name, username: un, email, password: p, profile: hasProfile ? profile : null });
     if (!r.ok) { goUp.disabled = false; goUp.classList.remove('busy'); return say(msgUp, r.error); }
     say(msgUp, `Account created. Welcome, ${r.session.name.split(' ')[0]}!`, true);
     setTimeout(() => location.replace('index.html'), 600);
   }, 450);
 });
 clear(...Object.values(f));
+
+/* ---------- continue anonymously ---------- */
+$('#anon').addEventListener('click', () => {
+  const s = Auth.guest();
+  say(panes.up.hidden ? msg : msgUp, `Continuing as ${s.name}…`, true);
+  setTimeout(() => location.replace('index.html'), 350);
+});
 
 // social buttons are visual only (they need a real backend / OAuth keys)
 document.querySelectorAll('.social button').forEach(b =>

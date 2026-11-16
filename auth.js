@@ -37,7 +37,7 @@ const Auth = (() => {
   };
 
   const start = u => {
-    const s = { username: u.username, name: u.name, email: u.email, role: u.role };
+    const s = { username: u.username, name: u.name, email: u.email, role: u.role, profile: u.profile || null, guest: !!u.guest };
     try { sessionStorage.setItem(KEY, JSON.stringify(s)); } catch {}
     return s;
   };
@@ -45,6 +45,41 @@ const Auth = (() => {
   return {
     session,
     isAdmin: () => session()?.role === 'Admin',
+
+    /* "Continue anonymously" sessions can browse, but can't send reports, create tickets / tasks /
+       projects, vote, save or comment. */
+    isGuest: () => !!session()?.guest,
+
+    /* If the visitor is anonymous, show the "sign in first" dialog and return true (= stop the action).
+       Signed-in users get false and carry on.   usage:  if (Auth.gate('submit a report')) return; */
+    gate(what = 'do that') {
+      if (!session()?.guest) return false;
+      if (document.getElementById('gate-dlg')) return true;
+      const d = document.createElement('dialog');
+      d.id = 'gate-dlg'; d.className = 'modal gate';
+      d.innerHTML = `<div class="mform">
+        <div class="gate-ic" aria-hidden="true"><i class="icon" data-lucide="lock"></i></div>
+        <h2>Sign in required</h2>
+        <p class="mnote">You’re browsing anonymously. You need to sign in to ${what}. Don’t have an account yet? Continue to sign up, it only takes a minute.</p>
+        <div class="gate-btns">
+          <button class="btn" type="button" data-to="signin">Sign in</button>
+          <button class="btn ghost" type="button" data-to="signup">Sign up</button>
+          <button class="gate-x" type="button" data-to="">Not now</button>
+        </div></div>`;
+      d.addEventListener('click', e => {
+        const b = e.target.closest('[data-to]');
+        if (e.target === d || (b && !b.dataset.to)) return d.close();
+        if (b) {                                         // end the anonymous session so login.html doesn't bounce back
+          try { sessionStorage.removeItem(KEY); } catch {}
+          location.href = 'login.html#' + b.dataset.to;
+        }
+      });
+      d.addEventListener('close', () => d.remove());
+      (document.querySelector('.page') || document.body).appendChild(d);   // inside .page so it follows light/dark theme
+      if (window.lucide) lucide.createIcons();
+      d.showModal();
+      return true;
+    },
 
     /* only these roles may edit / move / delete tickets. Members can read them and comment. */
     canManageTickets: () => ['Admin', 'Staff'].includes(session()?.role),
@@ -71,15 +106,22 @@ const Auth = (() => {
     },
 
     /* create an account and sign it in. Returns { ok, error?, session? } */
-    register({ name, username, email, password }) {
+    register({ name, username, email, password, profile }) {
       username = username.trim().toLowerCase();
       email = email.trim().toLowerCase();
       if (allUsers().some(u => u.username === username)) return { ok: false, error: 'That username is already taken.' };
       if (allUsers().some(u => (u.email || '').toLowerCase() === email)) return { ok: false, error: 'That email is already registered.' };
-      const u = { username, password, name: name.trim(), email, role: 'Member' };  // sign-ups are always Members
+      const u = { username, password, name: name.trim(), email, role: 'Member', profile: profile || null };  // sign-ups are always Members
       try { localStorage.setItem(USERS_KEY, JSON.stringify([...saved(), u])); }
       catch { return { ok: false, error: 'Could not save the account (browser storage is blocked).' }; }
       return { ok: true, session: start(u) };
+    },
+
+    /* continue without an account. A throw-away Member session: nothing is saved to the
+       users list, and it ends when the tab closes. */
+    guest() {
+      const id = 'guest-' + Math.random().toString(36).slice(2, 8);
+      return start({ username: id, name: 'Anonymous', email: '', role: 'Member', guest: true });
     },
 
     /* Settings page: change display name. Returns { ok, error?, session? } */
